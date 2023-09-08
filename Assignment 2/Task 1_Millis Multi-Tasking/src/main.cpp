@@ -12,6 +12,9 @@ long perviousGMillis = 0;
 int yellowInterval = 1000; // one second
 int greenInterval = 500; // half a second
 
+void task1();
+void task2();
+
 void setup() {
 
   SerialUSB.begin(9600);
@@ -21,6 +24,11 @@ void setup() {
 }
 
 void loop() {
+  task1();
+  task2();
+}
+
+void task1() {
   long currentMillis = millis();
 
   if((currentMillis - perviousYMillis) > yellowInterval) {
@@ -31,7 +39,11 @@ void loop() {
     digitalWrite(LED_YELLOW, !h_l);
     SerialUSB.print("Yellow LED is ");SerialUSB.println(h_l == 1 ? "On" : "OFF");
   }
-  
+}
+
+void task2() {
+  long currentMillis = millis();
+
   if((currentMillis - perviousGMillis) > greenInterval) {
     perviousGMillis = currentMillis;
     
@@ -40,6 +52,4 @@ void loop() {
     digitalWrite(LED_BLUE, !digitalRead(LED_BLUE));
     SerialUSB.print("Blue LED is ");SerialUSB.println(h_l == 1 ? "On" : "OFF");    
   }
-
-
 }
