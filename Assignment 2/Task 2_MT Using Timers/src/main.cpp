@@ -57,7 +57,7 @@ void startTimer(int freqHz, TcCount16* TC, IRQn Interrpt, void (*setClock)()) {
 
   // enable compare interrupt to happen
   TC->INTENSET.reg = 0;
-  TC->INTENSET.bit.MC0 = 1;
+  TC->INTENSET.bit.OVF = TC_INTENSET_OVF;
 
   NVIC_EnableIRQ(Interrpt);
 
@@ -80,23 +80,19 @@ void setTimerFrequency(int freqHz, TcCount16* TC) {
 }
 
 void TC3_Handler() {
-  TcCount16* TC = (TcCount16*) TC3;
-  if(TC->INTFLAG.bit.MC0 == 1){
-    TC->INTFLAG.bit.MC0 = 1;
 
-    byte h_l = digitalRead(LED_YELLOW);
-    digitalWrite(LED_YELLOW, !h_l);
-    SerialUSB.print("Yellow LED is ");SerialUSB.println(h_l == 1 ? "On" : "OFF");
-  }
+  byte h_l = digitalRead(LED_YELLOW);
+  digitalWrite(LED_YELLOW, !h_l);
+  SerialUSB.print("Yellow LED is ");SerialUSB.println(h_l == 1 ? "On" : "OFF");
+
+  REG_TC3_INTFLAG = TC_INTFLAG_OVF;
 }
 
 void TC4_Handler() {
-  TcCount16* TC = (TcCount16*) TC4;
-  if(TC->INTFLAG.bit.MC0 == 1){
-    TC->INTFLAG.bit.MC0 = 1;
 
-    byte h_l = digitalRead(LED_BLUE);
-    digitalWrite(LED_BLUE, !h_l);
-    SerialUSB.print("BLUE LED is ");SerialUSB.println(h_l == 1 ? "On" : "OFF");
-  }
+  byte h_l = digitalRead(LED_BLUE);
+  digitalWrite(LED_BLUE, !h_l);
+  SerialUSB.print("BLUE LED is ");SerialUSB.println(h_l == 1 ? "On" : "OFF");
+
+  REG_TC4_INTFLAG = TC_INTFLAG_OVF;
 }
