@@ -18,14 +18,10 @@ void loop() { }
 
 void TC3_Handler() { //! is it reserverd Naming Convention ???
 
-    TcCount16* TC = (TcCount16*) TC3;
-    
-    if(TC->INTFLAG.bit.MC0 == 1) {
-        TC->INTFLAG.bit.MC0 = 1; //! I don't understand this part
+    digitalWrite(PIN_LED_13, !digitalRead(PIN_LED_13));
 
-        digitalWrite(PIN_LED_13, !digitalRead(PIN_LED_13));
 
-    }
+    REG_TC3_INTFLAG = TC_INTFLAG_OVF;
 }
 
 void startTimer(int freqHz) {
@@ -59,7 +55,7 @@ void startTimer(int freqHz) {
 
     // enable interrupts
     TC->INTENSET.reg = 0;
-    TC->INTENSET.bit.MC0 = 1;
+    TC->INTENSET.bit.OVF = TC_INTENSET_OVF; // = 0
 
     NVIC_EnableIRQ(TC3_IRQn);
 
