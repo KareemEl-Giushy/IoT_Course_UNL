@@ -7,13 +7,13 @@
 
 
 long perviousYMillis = 0;
-long perviousGMillis = 0;
+long perviousBMillis = 0;
 
 int yellowInterval = 1000; // one second
-int greenInterval = 500; // half a second
+int blueInterval = 500; // half a second
 
-void task1();
-void task2();
+void yellowLED();
+void blueLED();
 
 void setup() {
 
@@ -24,11 +24,11 @@ void setup() {
 }
 
 void loop() {
-  task1();
-  task2();
+  yellowLED();
+  blueLED();
 }
 
-void task1() {
+void yellowLED() {
   long currentMillis = millis();
 
   if((currentMillis - perviousYMillis) > yellowInterval) {
@@ -41,15 +41,15 @@ void task1() {
   }
 }
 
-void task2() {
+void blueLED() {
   long currentMillis = millis();
 
-  if((currentMillis - perviousGMillis) > greenInterval) {
-    perviousGMillis = currentMillis;
+  if((currentMillis - perviousBMillis) > blueInterval) {
+    perviousBMillis = currentMillis;
     
-    byte h_l = digitalRead(LED_YELLOW); 
+    byte h_l = digitalRead(LED_BLUE); 
 
-    digitalWrite(LED_BLUE, !digitalRead(LED_BLUE));
+    digitalWrite(LED_BLUE, !h_l);
     SerialUSB.print("Blue LED is ");SerialUSB.println(h_l == 1 ? "On" : "OFF");    
   }
 }
