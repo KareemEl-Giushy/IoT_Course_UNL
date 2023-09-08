@@ -4,6 +4,10 @@
 - Time Intervals
 - Timers/Counters (TC[x])
 
+***!! If you are using the PDF version of the documentation, I encourage you to check out the repo with the documentation well-presented !!***
+
+[Repo on github](https://github.com/KareemEl-Giushy/IoT_Course_UNL/tree/main/Assignment%202)
+
 ## Task 1: Multi-Tasking Using Millis function
 
 ### *1.1. Task Requirements:*
