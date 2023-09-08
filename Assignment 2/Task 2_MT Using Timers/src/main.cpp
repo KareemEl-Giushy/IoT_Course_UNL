@@ -1,9 +1,7 @@
 #include <Arduino.h>
 
 #define CPU_HZ 48000000
-#define TIMER_PRESCALER_DIV 1024
 
-// #define LED_GREEN   PIN_LED_TXL
 #define LED_BLUE    PIN_LED_13
 #define LED_YELLOW  PIN_LED_RXL
 
@@ -22,8 +20,8 @@ void setup() {
   pinMode(LED_BLUE, OUTPUT);
   pinMode(LED_YELLOW, OUTPUT);
   // start Timers 
-  startTimer(1, (TcCount16*) TC3, TC3_IRQn, setUpTC3Clock);
-  startTimer(2, (TcCount16*) TC4, TC4_IRQn, setUpTC4Clock);
+  startTimer(1, (TcCount16*) TC3, TC3_IRQn, setUpTC3Clock); // yellow
+  startTimer(2, (TcCount16*) TC4, TC4_IRQn, setUpTC4Clock); // blue
 
 }
 
@@ -63,7 +61,7 @@ void startTimer(int freqHz, TcCount16* TC, IRQn Interrpt, void (*setClock)()) {
 
   NVIC_EnableIRQ(Interrpt);
 
-  TC->CTRLA.reg |= 0x1ul << TC_CTRLA_ENABLE_Pos; // which is 1
+  TC->CTRLA.reg |= 0x1ul << TC_CTRLA_ENABLE_Pos; // TC_CTRLA_ENABLE_Pos which is 1
   while(TC->STATUS.bit.SYNCBUSY == 1);
 }
 
